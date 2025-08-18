@@ -1,0 +1,10 @@
+{
+    "users" : [
+        {
+            "username": "sahithigorthi",
+            "password": "daddygorthi",
+            "streak": 1,
+            "money" : 10
+        }
+    ]
+}

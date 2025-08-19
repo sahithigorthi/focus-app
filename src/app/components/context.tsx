@@ -1,6 +1,5 @@
 'use client';
-import {useState, createContext, ReactNode, useContext} from 'react';
-import { supabase } from '../../../lib/supabaseClient'
+import {useState, createContext, ReactNode} from 'react';
 
 
 type Props = {
@@ -9,7 +8,9 @@ type Props = {
 
 export const BackgroundContext = createContext({
     background: 'white.png',
-    setBackground: (background:string) => {},
+    setBackground: (background:string) => {
+        console.log(background);
+    },
 })
 
 export function BackgroundProvider({children}:Props) {
@@ -23,7 +24,9 @@ export function BackgroundProvider({children}:Props) {
 
 export const UsernameContext = createContext({
     username: "",
-    setUsername: (username: string) => {},
+    setUsername: (username: string) => {
+        console.log(username);
+    },
 })
 
 export function UsernameProvider({children}:Props){
@@ -38,7 +41,9 @@ export function UsernameProvider({children}:Props){
 
 export const SignedInContext = createContext({
     signedIn: false,
-    setSignedIn: (signedIn: boolean) => {},
+    setSignedIn: (signedIn: boolean) => {
+        console.log(signedIn);
+    },
 })
 
 export function SignedInProvider({children}: Props){
@@ -53,7 +58,9 @@ export function SignedInProvider({children}: Props){
 
 export const MoneyContext = createContext({
     money: 0,
-    setMoney: (money:number)=> {}
+    setMoney: (money:number)=> {
+        console.log(money);
+    }
 })
 
 export function MoneyContextProvider({children}: Props){
@@ -68,7 +75,9 @@ export function MoneyContextProvider({children}: Props){
 
 export const PuppyContext = createContext({
     image: 'defaultpuppy.png',
-    setImage:(image:string)=>{}
+    setImage:(image:string)=>{
+        console.log(image);
+    }
 })
 
 export function PuppyContextProvider({children}: Props){

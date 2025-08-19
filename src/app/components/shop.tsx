@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { MoneyContext, UsernameContext, PuppyContext } from './context';
 import { supabase } from "../../../lib/supabaseClient";
+import Image from 'next/image'
 
 interface ShopItem {
   id: string;
@@ -16,15 +17,15 @@ export default function Shop() {
   const { username } = useContext(UsernameContext); // This is email
 
   const shopItems: ShopItem[] = [
-    { id: "angelpuppy", image: "angelpuppy.png", price: 3 },
-    { id: "artistpuppy", image: "artistpuppy.png", price: 2 },
-    { id: "capepuppy", image: "capepuppy.png", price: 1 },
-    { id: "clippuppy", image: "clippuppy.png", price: 1 },
-    { id: "collarpuppy", image: "collarpuppy.png", price: 1 },
-    { id: "devilpuppy", image: "devilpuppy.png", price: 1 },
-    { id: "pinkclippuppy", image: "pinkclippuppy.png", price: 1 },
-    { id: "smartpuppy", image: "smartpuppy.png", price: 1 },
-    { id: "starpuppy", image: "starpuppy.png", price: 1 },
+    { id: "angelpuppy", image: "angelpuppy.png", price: 10 },
+    { id: "artistpuppy", image: "artistpuppy.png", price: 40 },
+    { id: "capepuppy", image: "capepuppy.png", price: 20 },
+    { id: "clippuppy", image: "clippuppy.png", price: 10 },
+    { id: "collarpuppy", image: "collarpuppy.png", price: 10 },
+    { id: "devilpuppy", image: "devilpuppy.png", price: 30 },
+    { id: "pinkclippuppy", image: "pinkclippuppy.png", price: 15 },
+    { id: "smartpuppy", image: "smartpuppy.png", price: 15 },
+    { id: "starpuppy", image: "starpuppy.png", price: 10 },
   ];
 
   // Fetch owned items once user is available
@@ -49,7 +50,7 @@ export default function Shop() {
     };
 
     if (username) fetchOwnedItems();
-  }, [username]);
+  }, [username,image]); //was told to put in the dependency array, but may need to change the code 
 
   const updateMoneyInDatabase = async (newMoney: number) => {
     const { error } = await supabase
@@ -96,7 +97,7 @@ export default function Shop() {
       </button>
 
       {shopMenu && (
-        <div className="z-0 fixed bottom-29 right-0 flex bg-black opacity-80 w-1/6 h-1/2 mx-4 rounded-lg text-white font-semibold grid grid-cols-2 overflow-y-auto">
+        <div className="z-0 fixed bottom-29 right-0 bg-black opacity-80 w-1/6 h-1/2 mx-4 rounded-lg text-white font-semibold grid grid-cols-2 overflow-y-auto">
           {shopItems.map((item) => {
             const isOwned = ownedItems.includes(item.id);
             const canAfford = money >= item.price;
@@ -116,7 +117,7 @@ export default function Shop() {
                 }`}
               >
                 <p className="text-xs"> {item.price} c</p>
-                <img src={item.image} alt={item.id} className="w-fit h-fit" />
+                <Image src={`/${item.image}`} alt={item.id} width={100} height={100}  />
 
                 {isOwned ? (
                   <button

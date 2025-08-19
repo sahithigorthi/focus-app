@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     );
 
     if (user) {
-      const { password, ...userWithoutPassword } = user;
+      const { ...userWithoutPassword } = user;
       return NextResponse.json({ success: true, user: userWithoutPassword });
     } else {
       return NextResponse.json(

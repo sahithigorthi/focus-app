@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import {useState, useContext} from 'react';
 import Timer from '@/app/components/timer';
+import Image from 'next/image'
 import QuoteDisplay from '@/app/components/quoteDisplay'
 import {ChangeTimer} from '@/app/components/timer'
 import Sidebar from '@/app/components/sidebar'
@@ -16,7 +17,6 @@ export default function FocusPage(){
     const router = useRouter();
     const [originalTimer, setOriginalTimer] = useState(1800);
     const [timer, setTimer] = useState(1800);
-    
     return(
       <div className="h-screen flex w-screen items-center justify-center" style={{
         backgroundImage: `url(${background})`,
@@ -26,9 +26,9 @@ export default function FocusPage(){
       }}>
             <Timer seconds={timer} setSeconds={setTimer}  originalTimer={originalTimer}/>
             <div className="w-1/8 h-1/8 z-20 items-center justify-center flex absolute bottom-20 group">
-              <img src={`${image}.png`}/> 
+            <Image src={`/${image}.png`} height={600} width={600} alt=''/>
                 <div className="absolute bottom-full hidden group-hover:block bg-blue-300 text-white font-semibold text-xs rounded px-2 py-1 whitespace-nowrap left-45">
-                  You got this! 
+                  You got this!
                 </div>
             </div>
             <div className="flex absolute top-0 right-0 w-1/4">
@@ -41,7 +41,7 @@ export default function FocusPage(){
             <Sidebar/>
             </div>
 
-            <div className="flex absolute bottom-0 right-0 m-4 grid grid-cols-2 bg-blue-100 py-1 px-1.5 text-blue-300 font-semibold rounded-md">
+            <div className="absolute bottom-0 right-0 m-4 grid grid-cols-2 bg-blue-100 py-1 px-1.5 text-blue-300 font-semibold rounded-md">
               <div className="flex mx-3 hover:text-blue-600 cursor-pointer" onClick={()=>router.push('/')}>
                 Home
               </div>

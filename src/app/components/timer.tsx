@@ -1,114 +1,144 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import {useEffect, useState, useRef, useContext} from 'react';
-import {MoneyContext, UsernameContext} from '@/app/components/context'
-import { supabase } from '../../../lib/supabaseClient'
+import { useEffect, useState, useRef, useContext, useCallback } from 'react';
+import { MoneyContext, UsernameContext } from '@/app/components/context';
+import { supabase } from '../../../lib/supabaseClient';
 
-interface Props{
-    seconds: number;
-    setSeconds: React.Dispatch<React.SetStateAction<number>>;
-    originalTimer: number;
+interface Props {
+  seconds: number;
+  setSeconds: React.Dispatch<React.SetStateAction<number>>;
+  originalTimer: number;
 }
 
+export default function Timer({ seconds, setSeconds, originalTimer }: Props) {
+  const { username } = useContext(UsernameContext);
+  const { money, setMoney } = useContext(MoneyContext);
 
+  const [isActive, setIsActive] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [hasIncremented, setHasIncremented] = useState(false);
+  const endTimeRef = useRef<number | null>(null); // stores target deadline in ms
 
-export default function Timer({seconds, setSeconds, originalTimer}:Props){
-    const router = useRouter();
-    const {username} = useContext(UsernameContext);
-    const {money, setMoney} = useContext(MoneyContext)
-    const initialTimeRef = useRef<number>(seconds);
-    const [isActive, setisActive] = useState(false);
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
-    const [hasIncremented, setHasIncremented] = useState(false);
+  const updateDatabaseMoney = useCallback(
+    async (newAmount: number) => {
+      const { error } = await supabase
+        .from('userdata')
+        .update({ money: newAmount })
+        .eq('email', username)
+        .single();
 
-    const updateDatabaseMoney = async (newAmount: number) => {
-        const { error } = await supabase
-          .from('userdata')
-          .update({ money: newAmount })
-          .eq('email', username) // make sure this is the identifier you use
-          .single();
-      
-        if (error) {
-          console.error("Error updating money in DB:", error.message);
-        } else {
-          console.log("Money successfully updated to:", newAmount);
-        }
-      };
+      if (error) {
+        console.error('Error updating money in DB:', error.message);
+      } else {
+        console.log('Money successfully updated to:', newAmount);
+      }
+    },
+    [username] // only recreate if username changes
+  );
 
-    useEffect(() => {
-        if (!isActive) return;
-        intervalRef.current = setInterval(() => {
-        setSeconds(prevSeconds => {
-            if (prevSeconds <= 1) {
-                clearInterval(intervalRef.current!);
-                intervalRef.current = null;
-                setisActive(false);
-              return 0; // lock timer at zero
-            }
-            return prevSeconds - 1;
-            });
-        }, 1000);
-        return () => {
-            if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-            }
-            };
-        }, [isActive]);
+  // Interval effect — calculates time left based on actual wall clock
+  useEffect(() => {
+    if (!isActive) return;
 
-    
-    function handleStart(){
-        setisActive(true);
+    if (!endTimeRef.current) {
+      endTimeRef.current = Date.now() + seconds * 1000;
+    }
+
+    const updateRemaining = () => {
+      const remaining = Math.max(
+        0,
+        Math.floor((endTimeRef.current! - Date.now()) / 1000)
+      );
+      setSeconds(remaining);
+
+      if (remaining === 0) {
+        clearInterval(intervalRef.current!);
+        intervalRef.current = null;
+        setIsActive(false);
+      }
     };
-    
-    const handlePause = () => {
-        setisActive(false);
+
+    updateRemaining();
+    intervalRef.current = setInterval(updateRemaining, 1000);
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isActive, seconds, setSeconds]);
+
+  // Award money when timer hits 0
+  useEffect(() => {
+    if (seconds === 0 && !hasIncremented) {
+      const newAmount = money + 2;
+      setMoney(newAmount);
+      setHasIncremented(true);
+      updateDatabaseMoney(newAmount); // ✅ stable reference now
     }
 
-    const handleResets = () => {
-        setisActive(false); 
-        setSeconds(originalTimer); // sets the timer countdown to what the original setting was
+    if (seconds !== 0) {
+      setHasIncremented(false);
     }
+  }, [seconds, hasIncremented, money, setMoney, updateDatabaseMoney]);
 
-    const minutes = Math.floor(seconds/60);
-    const newSeconds = seconds%60;
-    const formattedTime = `${String(minutes).padStart(2, '0')}:${String(newSeconds).padStart(2,'0')}`;
+  // --- Controls ---
+  function handleStart() {
+    if (seconds > 0) {
+      endTimeRef.current = Date.now() + seconds * 1000;
+      setIsActive(true);
+    }
+  }
 
-    useEffect(() => {
-        if (minutes === 0 && newSeconds === 0 && !hasIncremented) {
-            setMoney(money+2);
-            setHasIncremented(true);
-            updateDatabaseMoney(money+2); // prevent more increments
-        }
+  function handlePause() {
+    setIsActive(false);
+    endTimeRef.current = null;
+  }
 
-        // Reset when timer restarts (example logic — adjust as needed)
-        if (minutes !== 0 || newSeconds !== 0) {
-            setHasIncremented(false);
-        }
-        }, [minutes, newSeconds]);
-    
-        
+  function handleReset() {
+    setIsActive(false);
+    setSeconds(originalTimer);
+    endTimeRef.current = null;
+    setHasIncremented(false);
+  }
 
-    return(
-        <div className = "absolute place-content-center">
-            <div className = "col-span-3 relative flex place-content-center text-9xl text-blue-200 bottom-5">
-                <b> {formattedTime} </b>
-            </div>
-            <div className="flex-row flex place-content-center">
-                <div onClick={handleStart} className="cursor-pointer text-3xl mx-14 font-semibold text-blue-300 bg-blue-100 px-2 py-1 rounded-md">
-                    Start 
-                </div>
-                <div onClick={handlePause} className="cursor-pointer text-3xl font-semibold text-blue-300 px-2 bg-blue-100 py-1 rounded-md">
-                    Pause
-                </div>
-                <div onClick={handleResets} className="cursor-pointer text-3xl mx-14 font-semibold text-blue-300 px-2 bg-blue-100 py-1 rounded-md">
-                    Reset
-                </div>
-            </div>
+  // --- UI formatting ---
+  const minutes = Math.floor(seconds / 60);
+  const newSeconds = seconds % 60;
+  const formattedTime = `${String(minutes).padStart(2, '0')}:${String(
+    newSeconds
+  ).padStart(2, '0')}`;
 
+  return (
+    <div className="absolute place-content-center">
+      <div className="col-span-3 relative flex place-content-center text-9xl text-blue-200 bottom-5">
+        <b>{formattedTime}</b>
+      </div>
+      <div className="flex-row flex place-content-center">
+        <div
+          onClick={handleStart}
+          className="cursor-pointer text-3xl mx-14 font-semibold text-blue-300 bg-blue-100 px-2 py-1 rounded-md"
+        >
+          Start
         </div>
-    ); 
+        <div
+          onClick={handlePause}
+          className="cursor-pointer text-3xl font-semibold text-blue-300 px-2 bg-blue-100 py-1 rounded-md"
+        >
+          Pause
+        </div>
+        <div
+          onClick={handleReset}
+          className="cursor-pointer text-3xl mx-14 font-semibold text-blue-300 px-2 bg-blue-100 py-1 rounded-md"
+        >
+          Reset
+        </div>
+      </div>
+    </div>
+  );
 }
+
+
 
 interface timerProps{
     changeTimer: React.Dispatch<React.SetStateAction<number>>
@@ -128,8 +158,8 @@ export function ChangeTimer({changeTimer, changeOriginalTimer}:timerProps){
         changeOriginalTimer(1500);
     }
     function handle30(){
-        changeTimer(5);
-        changeOriginalTimer(5);
+        changeTimer(1800);
+        changeOriginalTimer(1800);
     }
     function handle45(){
         changeTimer(2700);

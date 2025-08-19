@@ -5,17 +5,15 @@ export default function Music(){
 
     return(
         <div className="absolute bg-blue-100 p-2 text-3xl rounded-md cursor-pointer">
-            <button className="" onClick={()=>{setMusicButton(!musicButton)}}> 
-                🎶 
+            <button className="" onClick={()=>{setMusicButton(!musicButton)}}>
+                🎶
             </button>
             {musicButton &&
-                <div className="z-0 fixed bottom-29 right-0 flex bg-black opacity-80 w-1/6 h-1/2 mx-4 rounded-lg text-white font-semibold grid grid-cols-3 grid-rows-5 place-items-center">
+                <div className="z-0 fixed bottom-29 right-0 bg-black opacity-80 w-1/6 h-1/2 mx-4 rounded-lg text-white font-semibold grid grid-cols-3 grid-rows-5 place-items-center">
                     <CustomAudioPlayer musicSource="lofimusic.mp3" title="Upbeat"/>
                     <CustomAudioPlayer musicSource="lofimusictrack2.mp3" title="Calming"/>
                     <CustomAudioPlayer musicSource="chillLofi.mp3" title="Chill"/>
                 </div>
-            
-            
             }
         </div>
     );
@@ -27,7 +25,7 @@ interface MusicProps {
     title: string;
     }
 
-export function CustomAudioPlayer({musicSource, title}: MusicProps){    
+export function CustomAudioPlayer({musicSource, title}: MusicProps){
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -47,7 +45,7 @@ export function CustomAudioPlayer({musicSource, title}: MusicProps){
     }
 
     return(
-        <div className="flex items-center space-x-4 flex flex-col">
+        <div className="flex items-center space-x-4 flex-col">
         <audio ref={audioRef} src={musicSource} />
         <button
             onClick={togglePlay}

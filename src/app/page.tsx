@@ -5,11 +5,12 @@ import Sidebar from '@/app/components/sidebar'
 import Background from '@/app/components/background'
 import { useRouter } from 'next/navigation';
 import { BackgroundContext, PuppyContext } from '@/app/components/context';
-import {AccountButton} from '@/app/accountPage/page'
+import {AccountButton} from '@/app/components/accountButton'
 import Music from '@/app/components/music'
 import Shop from '@/app/components/shop'
 import Streak from '@/app/components/streak'
 import {Money} from '@/app/components/streak'
+import Image from 'next/image'
 
 export default function Home(){
   const { background} = useContext(BackgroundContext);
@@ -33,22 +34,21 @@ export default function Home(){
     >
         <div className = "flex flex-col h-full w-full items-center justify-center z-10">
           {/* current time */}
-          <div className = "flex text-blue-200 font-bold z-10" style={{fontSize:"200px"}}> 
+          <div className = "flex text-blue-200 font-bold z-10" style={{fontSize:"200px"}}>
             <CurrentTime/>
           </div>
           <div className="w-1/8 h-1/8 z-20 items-center justify-center flex absolute bottom-20 group">
-              <img src={`${image}.png`}/> 
+              <Image src={`/${image}.png`} height={600} width={600} alt=''/>
                 <div className="absolute bottom-full hidden group-hover:block bg-blue-300 text-white font-semibold text-xs rounded px-2 py-1 whitespace-nowrap left-45">
-                  Let's Get Started!
+                  Lets Get Started!
                 </div>
             </div>
           {/* sidebar */}
           <div className="flex absolute bottom-0 left-0 z-20">
             <Sidebar/>
           </div>
-          
           {/* bottom navigation */}
-          <div className="flex absolute bottom-0 right-0 m-4 grid grid-cols-2 bg-blue-100 py-1 px-1.5 text-blue-300 font-semibold rounded-md">
+          <div className=" absolute bottom-0 right-0 m-4 grid grid-cols-2 bg-blue-100 py-1 px-1.5 text-blue-300 font-semibold rounded-md">
             <div className="flex mx-3 hover:text-blue-600 cursor-pointer" onClick={()=>router.push('/')}>
               Home
             </div>
@@ -91,7 +91,6 @@ export default function Home(){
                 <br/>
                 <p className="font-semibold"> Money  </p>
                 <p> Money is earned by studying and can be used to purchase various items in the shop! Currency in Focus Pet is denoted with c! </p>
-                 
                 <br/>
                 <p className="font-semibold"> Task List  </p>
                 <p> The task list helps you keep track of what you need to study! Add tasks to your list and check them off as you complete them! You can also add the difficulty or the subject. </p>

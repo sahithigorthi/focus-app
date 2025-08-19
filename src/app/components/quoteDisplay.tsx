@@ -7,10 +7,6 @@ const quotes = [
     '"If you can dream it, you can do it"'
                 ]
 
-type QuoteDisplayProps = {
-    quotes:string[];
-}
-
 export default function QuoteDisplay(){
     const [currentIndex,setCurrentIndex] = useState(0);
 

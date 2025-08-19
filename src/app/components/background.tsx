@@ -5,7 +5,6 @@ import { BackgroundContext } from '@/app/components/context';
 export default function Background(){
     const [backgroundBar, setBackgroundBar] = useState(false);
     const { setBackground } = useContext(BackgroundContext);
-    
 
     function handleChange(){
         setBackgroundBar(!backgroundBar);
@@ -63,7 +62,7 @@ export default function Background(){
         <div>
             <button className="text-blue-300 bg-blue-100 p-2 text-3xl font-semibold rounded-md cursor-pointer " onClick={handleChange}> 🖼️ </button>
             {backgroundBar &&
-                <div className="z-0 fixed bottom-29 right-0 flex bg-black opacity-80 w-1/6 h-1/2 mx-4 rounded-lg text-white font-semibold grid grid-cols-3 overflow-y-auto">
+                <div className="z-0 fixed bottom-29 right-0 bg-black opacity-80 w-1/6 h-1/2 mx-4 rounded-lg text-white font-semibold grid grid-cols-3 overflow-y-auto">
                     {/* first row */}
                     <div className="flex relative m-4 flex-col">
                         <button onClick={handleDefault} className="py-3 px-4 bg-blue-400 rounded-md opacity-100 cursor-pointer place-content-center">

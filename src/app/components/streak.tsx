@@ -3,6 +3,10 @@ import { useContext, useState, useEffect } from 'react';
 import { supabase } from '../../../lib/supabaseClient';
 import { UsernameContext, MoneyContext } from './context';
 
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
+
 export default function Streak() {
   const [streak, setStreak] = useState(0);
   const { username } = useContext(UsernameContext);

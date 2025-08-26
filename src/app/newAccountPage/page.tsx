@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
 import Link from 'next/link';
-import SignupForm from '@/app/components/login';
+import SignupForm from '@/app/components/signup';
 
 export default function NewAccountPage() {
   return (

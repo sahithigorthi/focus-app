@@ -3,6 +3,9 @@ import { useEffect, useState, useContext } from 'react';
 import { supabase } from '../../../lib/supabaseClient';
 import { UsernameContext } from './context';
 
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
 interface Task {
     id: number;
     task: string;
@@ -10,6 +13,8 @@ interface Task {
     difficulty?: string;
     subject?: string;
 }
+
+
 
 export default function TodoList() {
     const [taskInput, setTaskInput] = useState('');

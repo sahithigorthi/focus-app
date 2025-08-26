@@ -3,6 +3,9 @@ import { useEffect, useState, useRef, useContext, useCallback } from 'react';
 import { MoneyContext, UsernameContext } from '@/app/components/context';
 import { supabase } from '../../../lib/supabaseClient';
 
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
 interface Props {
   seconds: number;
   setSeconds: React.Dispatch<React.SetStateAction<number>>;

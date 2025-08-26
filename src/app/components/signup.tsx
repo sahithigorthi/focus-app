@@ -7,19 +7,19 @@ import { UsernameContext, SignedInContext } from './context';
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
 
-export default function LoginForm() {
+export default function SignupForm() {
   const router = useRouter();
   const { setUsername } = useContext(UsernameContext);
   const { setSignedIn } = useContext(SignedInContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  const handleSignup = async () => {
     if (!email || !password) return alert('Please enter both email and password');
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signUp({ email, password });
 
-    if (error) return alert('Invalid login credentials.');
+    if (error) return alert('Error creating account: ' + error.message);
     if (data.user) {
       setSignedIn(true);
       setUsername(email);
@@ -29,7 +29,7 @@ export default function LoginForm() {
 
   return (
     <div className="bg-white relative h-fit w-1/4 p-3 rounded-xl my-5">
-      <p className="flex justify-center text-xl text-blue-500 font-semibold">Log In</p>
+      <p className="flex justify-center text-xl text-blue-500 font-semibold">Create Account</p>
       <div>
         <p className="opacity-40 text-sm">Email</p>
         <input
@@ -51,11 +51,10 @@ export default function LoginForm() {
       </div>
       <button
         className="flex w-full p-2 rounded-md justify-center bg-blue-100 cursor-pointer"
-        onClick={handleLogin}
+        onClick={handleSignup}
       >
-        Log In
+        Sign Up
       </button>
     </div>
   );
 }
-

@@ -11,6 +11,8 @@ import { BackgroundContext, PuppyContext} from '@/app/components/context'
 import Music from '@/app/components/music'
 import Shop from '@/app/components/shop'
 
+export const dynamic = "force-dynamic";
+
 export default function FocusPage(){
     const {image} = useContext(PuppyContext);
     const { background} = useContext(BackgroundContext);

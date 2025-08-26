@@ -1,3 +1,4 @@
+'use client'
 import { useState, useEffect, useContext } from "react";
 import { MoneyContext, UsernameContext, PuppyContext } from './context';
 import { supabase } from "../../../lib/supabaseClient";

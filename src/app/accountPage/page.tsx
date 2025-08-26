@@ -6,6 +6,8 @@ import {UsernameContext} from '@/app/components/context'
 import { SignedInContext } from '@/app/components/context';
 import { supabase } from '../../../lib/supabaseClient'
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export default function AccountPage(){
     const router = useRouter();

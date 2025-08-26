@@ -12,6 +12,7 @@ import Music from '@/app/components/music'
 import Shop from '@/app/components/shop'
 
 export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export default function FocusPage(){
     const {image} = useContext(PuppyContext);

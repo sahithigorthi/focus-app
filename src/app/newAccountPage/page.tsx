@@ -4,6 +4,8 @@ import {useRouter} from 'next/navigation';
 import {useState} from 'react';
 import { supabase } from '../../../lib/supabaseClient'
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export default function NewAccount(){
     const [email, setEmail] = useState('');

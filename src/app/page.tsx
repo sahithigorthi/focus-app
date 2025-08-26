@@ -12,6 +12,9 @@ import Streak from '@/app/components/streak'
 import {Money} from '@/app/components/streak'
 import Image from 'next/image'
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 export default function Home(){
   const { background} = useContext(BackgroundContext);
   const [isOpen, setIsOpen] = useState(false);

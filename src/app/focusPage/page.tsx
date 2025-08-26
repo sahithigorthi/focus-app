@@ -31,7 +31,7 @@ export default function FocusPage(){
             <div className="w-1/8 h-1/8 z-20 items-center justify-center flex absolute bottom-20 group">
             <Image src={`/${image}.png`} height={600} width={600} alt=''/>
                 <div className="absolute bottom-full hidden group-hover:block bg-blue-300 text-white font-semibold text-xs rounded px-2 py-1 whitespace-nowrap left-45">
-                  You got this!
+                  You Got This!
                 </div>
             </div>
             <div className="flex absolute top-0 right-0 w-1/4">

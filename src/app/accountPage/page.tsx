@@ -16,6 +16,14 @@ export default function AccountPage() {
       <Link href="/newAccountPage" className="underline text-sm">
         Create Account
       </Link>
+      <br/>
+      <p className="text-sm font-semibold text-blue-500">
+        Forgot Password? 
+      </p>
+      <Link href="/resetPassword"className="underline text-sm">
+        Reset Password
+      </Link>
+
     </div>
   );
 }

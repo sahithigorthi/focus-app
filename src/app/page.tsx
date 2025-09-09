@@ -128,7 +128,7 @@ export default function Home(){
           </div>
           
           <div className="absolute top-6 left-65 font-semibold opacity-40 text-gray-500 z-0">
-            Beta Version
+            Beta Version: Made for Laptop/Computer
           </div>
 
           <div className="absolute bottom-4 left-95 font-semibold opacity-40 text-gray-500 z-0">

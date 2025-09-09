@@ -35,7 +35,7 @@ export default function UpdatePasswordPage() {
       setMessage('✅ Password updated successfully! You can now log in.')
       setPassword('');
       <Link href="/accountPage" className="underline text-sm">
-          Go to Login
+        Go to Login
       </Link>
     }
   }
@@ -49,25 +49,34 @@ export default function UpdatePasswordPage() {
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center bg-blue-100 space-y-3">
-      <p className="text-lg font-semibold text-blue-500">Set a New Password</p>
+    <div className="h-screen w-screen flex items-center justify-center bg-blue-100">
+      <div className="bg-white relative h-fit w-1/4 p-5 rounded-xl shadow-md">
+        <p className="flex justify-center text-xl text-blue-500 font-semibold mb-4">
+          Set a New Password
+        </p>
 
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Enter new password"
-        className="bg-gray-100 w-1/4 rounded-md p-2 outline-none"
-      />
+        <div className="mb-5">
+          <p className="opacity-40 text-sm">New Password</p>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter new password"
+            className="bg-gray-100 w-full rounded-md p-2 outline-none"
+          />
+        </div>
 
-      <button
-        onClick={handleUpdatePassword}
-        className="mt-2 p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600"
-      >
-        Update Password
-      </button>
+        <button
+          onClick={handleUpdatePassword}
+          className="flex w-full p-2 rounded-md justify-center bg-blue-100 cursor-pointer hover:bg-blue-200"
+        >
+          Update Password
+        </button>
 
-      {message && <p className="text-sm text-gray-700 mt-2">{message}</p>}
+        {message && (
+          <p className="text-sm text-gray-700 mt-3 text-center">{message}</p>
+        )}
+      </div>
     </div>
   )
 }

@@ -13,8 +13,8 @@ export default function ResetPasswordPage() {
     }
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-  redirectTo: 'https://main.dski32q1h5uoo.amplifyapp.com/updatePassword'
-})
+      redirectTo: 'https://main.dski32q1h5uoo.amplifyapp.com/updatePassword',
+    })
 
     if (error) {
       console.error('Error sending reset email:', error.message)
@@ -26,28 +26,34 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center bg-blue-100 space-y-3">
-      <p className="text-lg font-semibold text-blue-500">Reset Password</p>
-      <p className="text-sm font-semibold text-blue-500">
-        Enter your email to receive a password reset link.
-      </p>
+    <div className="h-screen w-screen flex items-center justify-center bg-blue-100">
+      <div className="bg-white relative h-fit w-1/4 p-5 rounded-xl">
+        <p className="flex justify-center text-xl text-blue-500 font-semibold mb-4">
+          Reset Password
+        </p>
 
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="example@email.com"
-        className="bg-gray-100 w-1/4 rounded-md p-2 outline-none"
-      />
+        <div className="mb-5">
+          <p className="opacity-40 text-sm">Email</p>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="example@email.com"
+            className="bg-gray-100 w-full rounded-md p-2 outline-none"
+          />
+        </div>
 
-      <button
-        className="mt-2 p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600"
-        onClick={sendPasswordReset}
-      >
-        Send Reset Link
-      </button>
+        <button
+          className="flex w-full p-2 rounded-md justify-center bg-blue-100 cursor-pointer hover:bg-blue-200"
+          onClick={sendPasswordReset}
+        >
+          Send Reset Link
+        </button>
 
-      {message && <p className="text-sm text-gray-700 mt-2">{message}</p>}
+        {message && (
+          <p className="text-sm text-gray-700 mt-3 text-center">{message}</p>
+        )}
+      </div>
     </div>
   )
 }

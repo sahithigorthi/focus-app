@@ -127,7 +127,7 @@ export default function Home(){
             }
           </div>
           
-          <div className="absolute top-0 right-4 z-20 font-semibold opacity-40 text-blue-500">
+          <div className="absolute top-14 left-5 z-20 font-semibold opacity-40 text-gray-500">
             Beta Version
           </div>
           

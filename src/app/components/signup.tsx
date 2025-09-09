@@ -1,6 +1,5 @@
 'use client';
 import { useState, useContext } from 'react';
-import { useRouter } from 'next/navigation';
 import { supabase } from '../../../lib/supabaseClient';
 import { UsernameContext, SignedInContext } from './context';
 
@@ -8,7 +7,6 @@ export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
 
 export default function SignupForm() {
-  const router = useRouter();
   const { setUsername } = useContext(UsernameContext);
   const { setSignedIn } = useContext(SignedInContext);
   const [email, setEmail] = useState('');
@@ -23,7 +21,7 @@ export default function SignupForm() {
     if (data.user) {
       setSignedIn(true);
       setUsername(email);
-      router.push('/');
+      alert('Check your email for a confirmation link!');
     }
   };
 

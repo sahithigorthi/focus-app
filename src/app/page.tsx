@@ -126,7 +126,11 @@ export default function Home(){
             </div>
             }
           </div>
-
+          
+          <div className="absolute top-0 right-4 z-20 font-semibold opacity-40 text-blue-500">
+            Beta Version
+          </div>
+          
 
 
           <div className="absolute flex top-0 left-24 --z-10">

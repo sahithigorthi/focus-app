@@ -1,65 +1,53 @@
-'use client';
-
-import { useState } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+'use client'
+import { useState } from 'react'
+import { supabase } from '../../../lib/supabaseClient'
 
 export default function ResetPasswordPage() {
-  const supabase = createClientComponentClient();
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
 
-  const handleReset = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setMessage('');
-    setError('');
+  async function sendPasswordReset() {
+    if (!email) {
+      setMessage('Please enter your email')
+      return
+    }
 
-    // This triggers Supabase's default password reset email
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+  redirectTo: 'https://main.dski32q1h5uoo.amplifyapp.com/updatePassword'
+})
 
-    if (error) setError(error.message);
-    else setMessage('Check your email for the password reset link.');
-  };
+    if (error) {
+      console.error('Error sending reset email:', error.message)
+      setMessage(error.message)
+    } else {
+      console.log('Reset email sent!')
+      setMessage('Check your email for the reset link.')
+    }
+  }
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center bg-blue-100">
-        <div className="bg-white relative h-fit w-1/4 p-3 rounded-xl my-5">
-        <p className="flex justify-center text-xl text-blue-500 font-semibold">Reset Password</p>
+    <div className="h-screen w-screen flex flex-col items-center justify-center bg-blue-100 space-y-3">
+      <p className="text-lg font-semibold text-blue-500">Reset Password</p>
+      <p className="text-sm font-semibold text-blue-500">
+        Enter your email to receive a password reset link.
+      </p>
 
-      <form onSubmit={handleReset} className="flex flex-col my-3">
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="p-2 border rounded"
-        />
-        <button type="submit" className="flex flex-col w-full p-2 rounded-md justify-center bg-blue-100 cursor-pointer my-5">
-          Send Reset Email
-        </button>
-      </form>
-      {message && <p className="text-blue-500 justify-center font-semibold text-sm flex">{message}</p>}
-      {error && <p className="text-red-500 mt-2">{error}</p>}
-      </div>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="example@email.com"
+        className="bg-gray-100 w-1/4 rounded-md p-2 outline-none"
+      />
+
+      <button
+        className="mt-2 p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600"
+        onClick={sendPasswordReset}
+      >
+        Send Reset Link
+      </button>
+
+      {message && <p className="text-sm text-gray-700 mt-2">{message}</p>}
     </div>
-  );
+  )
 }
-
-{/* <div className="bg-white relative h-fit w-1/4 p-3 rounded-xl my-5">
-      <p className="flex justify-center text-xl text-blue-500 font-semibold">Create Account</p>
-      <div>
-        <p className="opacity-40 text-sm">Email</p>
-        <input
-          type="email"
-          placeholder="example@email.com"
-          className="bg-gray-100 w-full rounded-md p-2 outline-none"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-      </div>
-      <div className="flex flex-col my-5">
-        
-      </div>
-      
-    </div> */}

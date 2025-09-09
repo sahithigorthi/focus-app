@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../../lib/supabaseClient'
-import Link from 'next/link'
 
 export default function UpdatePasswordPage() {
   const [password, setPassword] = useState('')
@@ -32,11 +31,8 @@ export default function UpdatePasswordPage() {
     if (error) {
       setMessage(error.message)
     } else {
-      setMessage('✅ Password updated successfully! You can now log in.')
+      setMessage('Password updated successfully! You can now log in.')
       setPassword('');
-      <Link href="/accountPage" className="underline text-sm">
-        Go to Login
-      </Link>
     }
   }
 

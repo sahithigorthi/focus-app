@@ -127,9 +127,14 @@ export default function Home(){
             }
           </div>
           
-          <div className="absolute top-14 left-5 z-20 font-semibold opacity-40 text-gray-500">
+          <div className="absolute top-6 left-65 font-semibold opacity-40 text-gray-500 z-0">
             Beta Version
           </div>
+
+          <div className="absolute bottom-4 left-95 font-semibold opacity-40 text-gray-500 z-0">
+            Follow Us & Reach Out to @StudyWithFocusPet on Instagram with feedback or questions!
+          </div>
+
           
 
 

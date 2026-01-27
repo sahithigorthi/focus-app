@@ -144,7 +144,7 @@ export default function Background(){
                         <button onClick={handlePeach} className="py-3 px-4 bg-blue-400 rounded-md opacity-100 cursor-pointer">
                         🍑
                         </button>
-                        <p className="text-blue-200 place-content-center flex text-sm"> Desk </p>
+                        <p className="text-blue-200 place-content-center flex text-sm"> Peach </p>
                     </div>
 
                 </div>

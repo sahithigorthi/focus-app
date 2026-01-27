@@ -161,8 +161,8 @@ export function ChangeTimer({changeTimer, changeOriginalTimer}:timerProps){
         changeOriginalTimer(1500);
     }
     function handle30(){
-        changeTimer(1800);
-        changeOriginalTimer(1800);
+        changeTimer(5);
+        changeOriginalTimer(5);
     }
     function handle45(){
         changeTimer(2700);

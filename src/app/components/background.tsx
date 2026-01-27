@@ -58,9 +58,9 @@ export default function Background(){
         setBackground('study.jpg');
     }
 
-    function handlePeach(){
-        setBackground('peachred.png')
-    }
+    // function handlePeach(){
+    //     setBackground('peachred.png')
+    // }
 
     return(
         <div>
@@ -141,10 +141,10 @@ export default function Background(){
                         <p className="text-blue-200 place-content-center flex text-sm"> Desk </p>
                     </div>
                     <div className="relative flex m-4 flex-col">
-                        <button onClick={handlePeach} className="py-3 px-4 bg-blue-400 rounded-md opacity-100 cursor-pointer">
+                        {/* <button onClick={handlePeach} className="py-3 px-4 bg-blue-400 rounded-md opacity-100 cursor-pointer">
                         🍑
                         </button>
-                        <p className="text-blue-200 place-content-center flex text-sm"> Peach </p>
+                        <p className="text-blue-200 place-content-center flex text-sm"> Peach </p> */}
                     </div>
 
                 </div>
